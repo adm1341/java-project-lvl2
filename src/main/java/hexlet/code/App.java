@@ -1,5 +1,4 @@
 package hexlet.code;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -13,7 +12,8 @@ import static java.lang.System.out;
 @Command(
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Integer> {
+
+public final class  App implements Callable<Integer> {
     @Parameters(index = "0", description = "path to first file")
     private String filepath1;
 
@@ -24,10 +24,10 @@ public class App implements Callable<Integer> {
     private String format = "stylish";
 
     @Option(names = {"-h", "--help"}, description = "Show this help message and exit.", help = true)
-    boolean help;
+    private boolean help;
 
     @Option(names = {"-V", "--version"}, description = "Print version information and exit.", help = true)
-    boolean version;
+    private boolean version;
 
     @Override
     public Integer call() throws Exception {
@@ -43,7 +43,5 @@ public class App implements Callable<Integer> {
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
-
     }
-
 }
