@@ -5,13 +5,15 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.util.concurrent.Callable;
+
 import static java.lang.System.out;
 
 
 @Command(
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.")
-public class App {
+public class App implements Callable<Integer> {
     @Parameters(index = "0", description = "path to first file")
     private String filepath1;
 
@@ -27,11 +29,21 @@ public class App {
     @Option(names = {"-V", "--version"}, description = "Print version information and exit.", help = true)
     boolean version;
 
-    public static void main(String[] args) {
-        final App main = CommandLine.populateCommand(new App(), args);
-        if (main.help) {
-            CommandLine.usage(main, out, CommandLine.Help.Ansi.AUTO);
+    @Override
+    public Integer call() throws Exception {
+        if (help) {
+            CommandLine.usage(this, out, CommandLine.Help.Ansi.AUTO);
         }
+        if (filepath1 != null) {
+            System.out.printf(Differ.generate(filepath1, filepath2));
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
+
     }
 
 }

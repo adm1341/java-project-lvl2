@@ -12,6 +12,7 @@ plugins {
 
 dependencies {
     implementation 'info.picocli:picocli:4.6.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
 }
 
 application {
@@ -24,6 +25,8 @@ compileJava {
 repositories {
     mavenCentral()
 }
+
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 
 
 
