@@ -10,6 +10,10 @@ plugins {
    id 'application'
 }
 
+dependencies {
+    implementation 'info.picocli:picocli:4.6.1'
+}
+
 application {
     mainClass = 'hexlet.code.App'
 }
