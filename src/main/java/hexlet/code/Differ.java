@@ -1,23 +1,26 @@
 package hexlet.code;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 public class Differ {
     public static String generate(String filepath1, String filePath2) throws Exception {
 
+
         Path pathFile1 = Paths.get(filepath1);
         Path pathFile2 = Paths.get(filePath2);
 
-        ObjectMapper mapper = new ObjectMapper();
+        String format1 = getExtensionByStringHandling(filepath1);
+        String format2 = getExtensionByStringHandling(filepath1);
 
-        TreeMap map1 = mapper.readValue(new File(pathFile1.toUri()), TreeMap.class);
-        TreeMap map2 = mapper.readValue(new File(pathFile2.toUri()), TreeMap.class);
+        TreeMap map1 = Parser.parseInMap(format1, new File(pathFile1.toUri()));
+
+        TreeMap map2 = Parser.parseInMap(format2, new File(pathFile2.toUri()));
 
         TreeMap<String, String> mapAll = new TreeMap();
         mapAll.putAll(map1);
@@ -55,5 +58,11 @@ public class Differ {
         }
         stringBuilder.append("}\n");
         return stringBuilder.toString();
+    }
+
+    static String getExtensionByStringHandling(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1)).get();
     }
 }
