@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 public class Differ {
-    public static String generate(String filepath1, String filePath2) throws Exception {
+    public static String generate(String filepath1, String filePath2, String format) throws Exception {
 
 
         Path pathFile1 = Paths.get(filepath1);
@@ -30,34 +30,30 @@ public class Differ {
         LinkedHashMap<String, String> mapOut = new LinkedHashMap<>();
         for (Map.Entry entry : mapAll.entrySet()) {
             String key = (String) entry.getKey();
-            if (map2.get(key) == null) {
-                mapOut.put("- " + key, entry.getValue().toString());
-            } else if (map1.get(key) == null) {
-                mapOut.put("+ " + key, entry.getValue().toString());
-            } else if (map2.get(key).equals(map1.get(key))) {
-                mapOut.put("  " + key, entry.getValue().toString());
-            } else if (!map2.get(key).equals(map1.get(key))) {
-                mapOut.put("- " + key, map1.get(key).toString());
-                mapOut.put("+ " + key, map2.get(key).toString());
+
+            Optional val1 = Optional.ofNullable(map1.get(key));
+            Optional val2 = Optional.ofNullable(map2.get(key));
+
+            String value;
+            if (entry.getValue() != null) {
+                value = entry.getValue().toString();
+            } else {
+                value = null;
+            }
+            if (!map2.containsKey(key)) {
+                mapOut.put("- " + key, value);
+            } else if (!map1.containsKey(key)) {
+                mapOut.put("+ " + key, value);
+            } else if (val2.equals(val1)) {
+                mapOut.put("  " + key, value);
+            } else if (!val2.equals(val1)) {
+                mapOut.put("- " + key, val1.isPresent() ? val1.get().toString() : null);
+                mapOut.put("+ " + key, val2.isPresent() ? val2.get().toString() : null);
             }
         }
 
-        return writeOutString(mapOut);
+        return Formatter.formatOut(format, mapOut);
 
-    }
-
-    static String writeOutString(LinkedHashMap<String, String> mapOut) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{\n");
-        for (Map.Entry<String, String> entry : mapOut.entrySet()) {
-            stringBuilder.append("  ");
-            stringBuilder.append(entry.getKey());
-            stringBuilder.append(": ");
-            stringBuilder.append(entry.getValue());
-            stringBuilder.append("\n");
-        }
-        stringBuilder.append("}\n");
-        return stringBuilder.toString();
     }
 
     static String getExtensionByStringHandling(String filename) {

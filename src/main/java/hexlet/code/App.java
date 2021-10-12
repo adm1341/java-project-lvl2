@@ -1,4 +1,5 @@
 package hexlet.code;
+
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -13,7 +14,7 @@ import static java.lang.System.out;
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.")
 
-public final class  App implements Callable<Integer> {
+public final class App implements Callable<Integer> {
     @Parameters(index = "0", description = "path to first file")
     private String filepath1;
 
@@ -35,7 +36,7 @@ public final class  App implements Callable<Integer> {
             CommandLine.usage(this, out, CommandLine.Help.Ansi.AUTO);
         }
         if (filepath1 != null) {
-            System.out.printf(Differ.generate(filepath1, filepath2));
+            System.out.printf(Differ.generate(filepath1, filepath2, format));
         }
         return 0;
     }
