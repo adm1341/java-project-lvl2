@@ -8,8 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: Set up openJDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '16'
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v3.0.0
+
       env:
         # Set CC_TEST_REPORTER_ID as secret of your repo
         CC_TEST_REPORTER_ID: ${{ secrets.TEST_COVERAGE }}
