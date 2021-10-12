@@ -23,4 +23,4 @@ jobs:
         with:
           # The report file must be there, otherwise Code Climate won't find it
           coverageCommand: ./gradlew jacocoTestReport
-          coverageLocations: "${{env.GITHUB_WORKSPACE}}/build/reports/jacoco/jacocoTestReport.xml:jacoco"
+          coverageLocations: "${{env.GITHUB_WORKSPACE}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco"
