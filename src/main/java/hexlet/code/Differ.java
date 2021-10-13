@@ -47,7 +47,7 @@ public class Differ {
             }
         }
 
-        return Formatter.formatOut(format, diffArray) ;
+        return Formatter.formatOut(format, diffArray);
 
     }
 
