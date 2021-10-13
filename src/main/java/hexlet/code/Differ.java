@@ -3,7 +3,7 @@ package hexlet.code;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -27,32 +27,28 @@ public class Differ {
         mapAll.putAll(map2);
 
 
-        LinkedHashMap<String, String> mapOut = new LinkedHashMap<>();
+        ArrayList<DiffObject> diffArray = new ArrayList<>();
+
         for (Map.Entry entry : mapAll.entrySet()) {
             String key = (String) entry.getKey();
 
             Optional val1 = Optional.ofNullable(map1.get(key));
             Optional val2 = Optional.ofNullable(map2.get(key));
+            String val1String = val1.isPresent() ? val1.get().toString() : null;
+            String val2String = val2.isPresent() ? val2.get().toString() : null;
 
-            String value;
-            if (entry.getValue() != null) {
-                value = entry.getValue().toString();
-            } else {
-                value = null;
-            }
             if (!map2.containsKey(key)) {
-                mapOut.put("- " + key, value);
+                diffArray.add(new DiffObject(key, "removed", val1, val2));
             } else if (!map1.containsKey(key)) {
-                mapOut.put("+ " + key, value);
+                diffArray.add(new DiffObject(key, "added", val1, val2));
             } else if (val2.equals(val1)) {
-                mapOut.put("  " + key, value);
+                diffArray.add(new DiffObject(key, "nothing", val1, val2));
             } else if (!val2.equals(val1)) {
-                mapOut.put("- " + key, val1.isPresent() ? val1.get().toString() : null);
-                mapOut.put("+ " + key, val2.isPresent() ? val2.get().toString() : null);
+                diffArray.add(new DiffObject(key, "updated", val1, val2));
             }
         }
 
-        return Formatter.formatOut(format, mapOut);
+        return Formatter.formatOut(format, diffArray);
 
     }
 

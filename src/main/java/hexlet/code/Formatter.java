@@ -1,27 +1,21 @@
 package hexlet.code;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import hexlet.code.formatters.FormatterPlain;
+import hexlet.code.formatters.FormatterStylish;
+
+import java.util.ArrayList;
 
 public class Formatter {
-    public static String formatOut(String format, LinkedHashMap<String, String> mapOut) {
-        if (format.equals("stylish")) {
-            return stylishOut(mapOut);
+    public static String formatOut(String format, ArrayList<DiffObject> diffArray) {
+        switch (format) {
+            case "stylish":
+                return FormatterStylish.formatOut(diffArray);
+            case "plain":
+                return FormatterPlain.formatOut(diffArray);
+            default:
+                throw new IllegalStateException("Unexpected value: " + format);
         }
-        return "";
     }
 
-    private static String stylishOut(LinkedHashMap<String, String> mapOut) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{\n");
-        for (Map.Entry<String, String> entry : mapOut.entrySet()) {
-            stringBuilder.append("  ");
-            stringBuilder.append(entry.getKey());
-            stringBuilder.append(": ");
-            stringBuilder.append(entry.getValue());
-            stringBuilder.append("\n");
-        }
-        stringBuilder.append("}\n");
-        return (stringBuilder.toString());
-    }
+
 }

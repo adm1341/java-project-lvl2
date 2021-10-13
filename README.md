@@ -5,3 +5,4 @@
 <a href="https://codeclimate.com/github/adm1341/java-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/0f0296dae92ce44dc15d/test_coverage" /></a>
 
 ![](resources/Img1.png)
+![](resources/Img2.jpg)
