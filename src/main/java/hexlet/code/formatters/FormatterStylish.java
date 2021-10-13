@@ -44,7 +44,7 @@ public class FormatterStylish {
             stringBuilder.append(entry.getValue());
             stringBuilder.append("\n");
         }
-        stringBuilder.append("}\n");
+        stringBuilder.append("}");
         return (stringBuilder.toString());
     }
 }
