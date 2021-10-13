@@ -52,7 +52,7 @@ public class Differ {
     }
 
     public static String generate(String filepath1, String filePath2) throws IOException {
-        return generate(filepath1, filePath2, "stylish");
+        return generate(filepath1, filePath2, "stylish") + "\n";
     }
 
     static String getExtensionByStringHandling(String filename) {
