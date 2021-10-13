@@ -131,8 +131,7 @@ public class DifferTest {
 
     @Test
     public void testDifferPlainBigFile1andFile2() throws IOException {
-        String expected = "\n"
-                + "Property 'chars2' was updated. From [complex value] to false\n"
+        String expected = "Property 'chars2' was updated. From [complex value] to false\n"
                 + "Property 'checked' was updated. From false to true\n"
                 + "Property 'default' was updated. From null to [complex value]\n"
                 + "Property 'id' was updated. From 45 to null\n"

@@ -10,7 +10,6 @@ public class FormatterPlain {
     public static String formatOut(ArrayList<DiffObject> diffArray) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n");
 
         for (DiffObject diffObject : diffArray) {
             String stringVal1 = null;
