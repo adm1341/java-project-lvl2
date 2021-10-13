@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 public class Differ {
-    public static String generate(String filepath1, String filePath2, String format) throws Exception {
+    public static String generate(String filepath1, String filePath2, String format) throws IOException {
 
 
         Path pathFile1 = Paths.get(filepath1);
@@ -34,8 +35,6 @@ public class Differ {
 
             Optional val1 = Optional.ofNullable(map1.get(key));
             Optional val2 = Optional.ofNullable(map2.get(key));
-            String val1String = val1.isPresent() ? val1.get().toString() : null;
-            String val2String = val2.isPresent() ? val2.get().toString() : null;
 
             if (!map2.containsKey(key)) {
                 diffArray.add(new DiffObject(key, "removed", val1, val2));

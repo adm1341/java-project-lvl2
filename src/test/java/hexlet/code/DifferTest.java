@@ -2,12 +2,17 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
 
     @Test
-    public void testDifferfile1andfile2() throws Exception {
+    public void testDifferfile1andfile2() throws IOException {
         String expected = "{\n"
                 + "  - follow: false\n"
                 + "    host: hexlet.io\n"
@@ -21,7 +26,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferfile1andfile1() throws Exception {
+    public void testDifferfile1andfile1() throws IOException {
         String expected = "{\n"
                 + "    follow: false\n"
                 + "    host: hexlet.io\n"
@@ -33,7 +38,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferYMLFile1andFile2() throws Exception {
+    public void testDifferYMLFile1andFile2() throws IOException {
         String expected = "{\n"
                 + "  - follow: false\n"
                 + "    host: hexlet.io\n"
@@ -48,7 +53,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferYMLFile1andFile1() throws Exception {
+    public void testDifferYMLFile1andFile1() throws IOException {
         String expected = "{\n"
                 + "    follow: false\n"
                 + "    host: hexlet.io\n"
@@ -61,7 +66,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferBigFile1andFile2() throws Exception {
+    public void testDifferBigFile1andFile2() throws IOException {
         String expected = "{\n"
                 + "    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
@@ -93,7 +98,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferYMLBigFile1andFile2() throws Exception {
+    public void testDifferYMLBigFile1andFile2() throws IOException {
         String expected = "{\n"
                 + "    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
@@ -125,7 +130,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDifferPlainBigFile1andFile2() throws Exception {
+    public void testDifferPlainBigFile1andFile2() throws IOException {
         String expected = "\n"
                 + "Property 'chars2' was updated. From [complex value] to false\n"
                 + "Property 'checked' was updated. From false to true\n"
@@ -142,6 +147,26 @@ public class DifferTest {
                 + "Property 'setting3' was updated. From true to 'none'\n";
         String actual;
         actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "plain");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDifferJSONBigFile1andFile2() throws IOException {
+
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get("src/test/resources/JsonExpect.json"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String fileString = sb.toString();
+
+        String expected = fileString.substring(0, fileString.length() - 1);
+        String actual;
+        actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "json");
         assertEquals(expected, actual);
     }
 }

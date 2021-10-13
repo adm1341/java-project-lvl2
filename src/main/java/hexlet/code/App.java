@@ -5,6 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import static java.lang.System.out;
@@ -31,7 +32,7 @@ public final class App implements Callable<Integer> {
     private boolean version;
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() throws IOException {
         if (help) {
             CommandLine.usage(this, out, CommandLine.Help.Ansi.AUTO);
         }
