@@ -47,12 +47,12 @@ public class Differ {
             }
         }
 
-        return Formatter.formatOut(format, diffArray);
+        return Formatter.formatOut(format, diffArray) + "\n";
 
     }
 
     public static String generate(String filepath1, String filePath2) throws IOException {
-        return generate(filepath1, filePath2, "stylish") + "\n";
+        return generate(filepath1, filePath2, "stylish");
     }
 
     static String getExtensionByStringHandling(String filename) {
