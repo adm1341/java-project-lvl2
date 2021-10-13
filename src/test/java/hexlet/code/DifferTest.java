@@ -20,7 +20,7 @@ public class DifferTest {
                 + "  - timeout: 50\n"
                 + "  + timeout: 20\n"
                 + "  + verbose: true\n"
-                + "}\n";
+                + "}";
         String actual = Differ.generate("src/test/resources/file1.json", "src/test/resources/file2.json", "stylish");
         assertEquals(expected, actual);
     }
@@ -32,7 +32,7 @@ public class DifferTest {
                 + "    host: hexlet.io\n"
                 + "    proxy: 123.234.53.22\n"
                 + "    timeout: 50\n"
-                + "}\n";
+                + "}";
         String actual = Differ.generate("src/test/resources/file1.json", "src/test/resources/file1.json", "stylish");
         assertEquals(expected, actual);
     }
@@ -46,7 +46,7 @@ public class DifferTest {
                 + "  - timeout: 50\n"
                 + "  + timeout: 20\n"
                 + "  + verbose: true\n"
-                + "}\n";
+                + "}";
         String actual;
         actual = Differ.generate("src/test/resources/fileYML1.yml", "src/test/resources/fileYML2.yml", "stylish");
         assertEquals(expected, actual);
@@ -59,7 +59,7 @@ public class DifferTest {
                 + "    host: hexlet.io\n"
                 + "    proxy: 123.234.53.22\n"
                 + "    timeout: 50\n"
-                + "}\n";
+                + "}";
         String actual;
         actual = Differ.generate("src/test/resources/fileYML1.yml", "src/test/resources/fileYML1.yml", "stylish");
         assertEquals(expected, actual);
@@ -91,7 +91,7 @@ public class DifferTest {
                 + "  + setting2: 300\n"
                 + "  - setting3: true\n"
                 + "  + setting3: none\n"
-                + "}\n";
+                + "}";
         String actual;
         actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "stylish");
         assertEquals(expected, actual);
@@ -123,7 +123,7 @@ public class DifferTest {
                 + "  + setting2: 300\n"
                 + "  - setting3: true\n"
                 + "  + setting3: none\n"
-                + "}\n";
+                + "}";
         String actual;
         actual = Differ.generate("src/test/resources/file1BigYML.yml", "src/test/resources/file2BigYML.yml", "stylish");
         assertEquals(expected, actual);
