@@ -37,7 +37,7 @@ public final class App implements Callable<Integer> {
             CommandLine.usage(this, out, CommandLine.Help.Ansi.AUTO);
         }
         if (filepath1 != null) {
-            System.out.printf(Differ.generate(filepath1, filepath2, format));
+            System.out.println(Differ.generate(filepath1, filepath2, format));
         }
         return 0;
     }
