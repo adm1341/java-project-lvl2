@@ -66,7 +66,10 @@ public class FormatterPlain {
                     throw new IllegalStateException("Unexpected value: " + diffObject.getAction());
             }
         }
+        String stringBuilderString = stringBuilder.toString();
 
-        return stringBuilder.toString();
+
+
+        return  stringBuilderString.substring(0, stringBuilderString.length() - 1);
     }
 }

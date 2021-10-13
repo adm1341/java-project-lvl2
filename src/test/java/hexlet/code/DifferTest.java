@@ -143,7 +143,7 @@ public class DifferTest {
                 + "Property 'obj1' was added with value: [complex value]\n"
                 + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
                 + "Property 'setting2' was updated. From 200 to 300\n"
-                + "Property 'setting3' was updated. From true to 'none'\n";
+                + "Property 'setting3' was updated. From true to 'none'";
         String actual;
         actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "plain");
         assertEquals(expected, actual);
