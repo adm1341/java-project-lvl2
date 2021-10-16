@@ -55,13 +55,19 @@ public class FormatterPlain {
     private static String valueToString(Object value) {
         String stringValue;
         if (value instanceof String) {
-            if (!value.equals("null")) {
-                stringValue = "'" + value + "'";
-            } else {
-                stringValue = value.toString();
-            }
+            stringValue = getStringValue(value);
         } else if (value instanceof Collection || value instanceof Map) {
             stringValue = "[complex value]";
+        } else {
+            stringValue = value.toString();
+        }
+        return stringValue;
+    }
+
+    private static String getStringValue(Object value) {
+        String stringValue;
+        if (!value.equals("null")) {
+            stringValue = "'" + value + "'";
         } else {
             stringValue = value.toString();
         }

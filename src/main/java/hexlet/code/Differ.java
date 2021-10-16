@@ -21,10 +21,15 @@ public class Differ {
 
         Map<String, Object> map2 = Parser.parseInMap(format2, readFileToString(pathFile2));
 
+        List<Diff> listDiff = getListOfDiff(map1, map2);
+
+        return Formatter.formatOut(format, listDiff);
+    }
+
+    private static List<Diff> getListOfDiff(Map<String, Object> map1, Map<String, Object> map2) {
         Map<String, Object> mapAll = new TreeMap<>();
         mapAll.putAll(map1);
         mapAll.putAll(map2);
-
 
         List<Diff> listDiff = new ArrayList<>();
 
@@ -45,8 +50,7 @@ public class Differ {
                 listDiff.add(new Diff(key, "updated", val1, val2));
             }
         }
-
-        return Formatter.formatOut(format, listDiff);
+        return listDiff;
 
     }
 
