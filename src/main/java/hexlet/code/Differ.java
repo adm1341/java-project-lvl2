@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -19,35 +20,36 @@ public class Differ {
         String format1 = getExtensionByStringHandling(filepath1);
         String format2 = getExtensionByStringHandling(filepath1);
 
-        TreeMap map1 = Parser.parseInMap(format1, new File(pathFile1.toUri()));
+        Map<String, Object> map1 = Parser.parseInMap(format1, new File(pathFile1.toUri()));
 
-        TreeMap map2 = Parser.parseInMap(format2, new File(pathFile2.toUri()));
+        Map<String, Object> map2 = Parser.parseInMap(format2, new File(pathFile2.toUri()));
 
-        TreeMap<String, String> mapAll = new TreeMap();
+        Map<String, Object> mapAll = new TreeMap<>();
         mapAll.putAll(map1);
         mapAll.putAll(map2);
 
 
-        ArrayList<DiffObject> diffArray = new ArrayList<>();
+        List<Diff> listDiff = new ArrayList<>();
 
-        for (Map.Entry entry : mapAll.entrySet()) {
+        for (Map.Entry<String, Object> entry : mapAll.entrySet()) {
             String key = (String) entry.getKey();
 
-            Optional val1 = Optional.ofNullable(map1.get(key));
-            Optional val2 = Optional.ofNullable(map2.get(key));
+            Object val1 = (map1.get(key) == null) ? "null" : map1.get(key);
+            Object val2 = (map2.get(key) == null) ? "null" : map2.get(key);
 
             if (!map2.containsKey(key)) {
-                diffArray.add(new DiffObject(key, "removed", val1, val2));
+                listDiff.add(new Diff(key, "removed", val1, val2));
             } else if (!map1.containsKey(key)) {
-                diffArray.add(new DiffObject(key, "added", val1, val2));
+                listDiff.add(new Diff(key, "added", val1, val2));
             } else if (val2.equals(val1)) {
-                diffArray.add(new DiffObject(key, "nothing", val1, val2));
+                listDiff.add(new Diff(key, "nothing", val1, val2));
+
             } else if (!val2.equals(val1)) {
-                diffArray.add(new DiffObject(key, "updated", val1, val2));
+                listDiff.add(new Diff(key, "updated", val1, val2));
             }
         }
 
-        return Formatter.formatOut(format, diffArray);
+        return Formatter.formatOut(format, listDiff);
 
     }
 

@@ -1,48 +1,46 @@
 package hexlet.code.formatters;
 
-import hexlet.code.DiffObject;
+import hexlet.code.Diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
+import java.util.List;
+
 
 public class FormatterStylish {
-    public static String formatOut(ArrayList<DiffObject> diffArray) {
-
-        Map<String, String> mapOut = new LinkedHashMap<>();
-
-        for (DiffObject diffObject : diffArray) {
-
-            String val1String = diffObject.getVal1().isPresent() ? diffObject.getVal1().get().toString() : null;
-            String val2String = diffObject.getVal2().isPresent() ? diffObject.getVal2().get().toString() : null;
-
-            switch (diffObject.getAction()) {
-                case "removed":
-                    mapOut.put("- " + diffObject.getKey(), val1String);
-                    break;
-                case "added":
-                    mapOut.put("+ " + diffObject.getKey(), val2String);
-                    break;
-                case "nothing":
-                    mapOut.put("  " + diffObject.getKey(), val2String);
-                    break;
-                case "updated":
-                    mapOut.put("- " + diffObject.getKey(), val1String);
-                    mapOut.put("+ " + diffObject.getKey(), val2String);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + diffObject.getAction());
-            }
-        }
+    public static String formatOut(List<Diff> listDiff) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{\n");
-        for (Map.Entry<String, String> entry : mapOut.entrySet()) {
+
+        for (Diff diff : listDiff) {
+
+            String val1String = diff.getVal1().toString();
+            String val2String = diff.getVal2().toString();
             stringBuilder.append("  ");
-            stringBuilder.append(entry.getKey());
-            stringBuilder.append(": ");
-            stringBuilder.append(entry.getValue());
-            stringBuilder.append("\n");
+            switch (diff.getAction()) {
+                case "removed" -> stringBuilder.append("- " + diff.getKey())
+                        .append(": ")
+                        .append(val1String)
+                        .append("\n");
+                case "added" -> stringBuilder.append("+ " + diff.getKey())
+                        .append(": ")
+                        .append(val2String)
+                        .append("\n");
+                case "nothing" -> stringBuilder.append("  " + diff.getKey())
+                        .append(": ")
+                        .append(val2String)
+                        .append("\n");
+                case "updated" -> stringBuilder.append("- " + diff.getKey())
+                        .append(": ")
+                        .append(val1String)
+                        .append("\n")
+                        .append("  ")
+                        .append("+ " + diff.getKey())
+                        .append(": ")
+                        .append(val2String)
+                        .append("\n");
+                default -> throw new IllegalStateException("Unexpected value: " + diff.getAction());
+            }
         }
         stringBuilder.append("}");
         return (stringBuilder.toString());

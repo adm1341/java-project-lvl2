@@ -1,76 +1,79 @@
 [ {
-  "Key" : "chars1",
-  "Action" : "nothing",
-  "ValueOne" : "[a, b, c]",
-  "ValueTwo" : "[a, b, c]"
+  "key" : "chars1",
+  "action" : "nothing",
+  "val1" : [ "a", "b", "c" ],
+  "val2" : [ "a", "b", "c" ]
 }, {
-  "Key" : "chars2",
-  "Action" : "updated",
-  "ValueOne" : "[d, e, f]",
-  "ValueTwo" : "false"
+  "key" : "chars2",
+  "action" : "updated",
+  "val1" : [ "d", "e", "f" ],
+  "val2" : false
 }, {
-  "Key" : "checked",
-  "Action" : "updated",
-  "ValueOne" : "false",
-  "ValueTwo" : "true"
+  "key" : "checked",
+  "action" : "updated",
+  "val1" : false,
+  "val2" : true
 }, {
-  "Key" : "default",
-  "Action" : "updated",
-  "ValueOne" : null,
-  "ValueTwo" : "[value1, value2]"
+  "key" : "default",
+  "action" : "updated",
+  "val1" : "null",
+  "val2" : [ "value1", "value2" ]
 }, {
-  "Key" : "id",
-  "Action" : "updated",
-  "ValueOne" : "45",
-  "ValueTwo" : null
+  "key" : "id",
+  "action" : "updated",
+  "val1" : 45,
+  "val2" : "null"
 }, {
-  "Key" : "key1",
-  "Action" : "removed",
-  "ValueOne" : "value1",
-  "ValueTwo" : null
+  "key" : "key1",
+  "action" : "removed",
+  "val1" : "value1",
+  "val2" : "null"
 }, {
-  "Key" : "key2",
-  "Action" : "added",
-  "ValueOne" : null,
-  "ValueTwo" : "value2"
+  "key" : "key2",
+  "action" : "added",
+  "val1" : "null",
+  "val2" : "value2"
 }, {
-  "Key" : "numbers1",
-  "Action" : "nothing",
-  "ValueOne" : "[1, 2, 3, 4]",
-  "ValueTwo" : "[1, 2, 3, 4]"
+  "key" : "numbers1",
+  "action" : "nothing",
+  "val1" : [ 1, 2, 3, 4 ],
+  "val2" : [ 1, 2, 3, 4 ]
 }, {
-  "Key" : "numbers2",
-  "Action" : "updated",
-  "ValueOne" : "[2, 3, 4, 5]",
-  "ValueTwo" : "[22, 33, 44, 55]"
+  "key" : "numbers2",
+  "action" : "updated",
+  "val1" : [ 2, 3, 4, 5 ],
+  "val2" : [ 22, 33, 44, 55 ]
 }, {
-  "Key" : "numbers3",
-  "Action" : "removed",
-  "ValueOne" : "[3, 4, 5]",
-  "ValueTwo" : null
+  "key" : "numbers3",
+  "action" : "removed",
+  "val1" : [ 3, 4, 5 ],
+  "val2" : "null"
 }, {
-  "Key" : "numbers4",
-  "Action" : "added",
-  "ValueOne" : null,
-  "ValueTwo" : "[4, 5, 6]"
+  "key" : "numbers4",
+  "action" : "added",
+  "val1" : "null",
+  "val2" : [ 4, 5, 6 ]
 }, {
-  "Key" : "obj1",
-  "Action" : "added",
-  "ValueOne" : null,
-  "ValueTwo" : "{nestedKey=value, isNested=true}"
+  "key" : "obj1",
+  "action" : "added",
+  "val1" : "null",
+  "val2" : {
+    "nestedKey" : "value",
+    "isNested" : true
+  }
 }, {
-  "Key" : "setting1",
-  "Action" : "updated",
-  "ValueOne" : "Some value",
-  "ValueTwo" : "Another value"
+  "key" : "setting1",
+  "action" : "updated",
+  "val1" : "Some value",
+  "val2" : "Another value"
 }, {
-  "Key" : "setting2",
-  "Action" : "updated",
-  "ValueOne" : "200",
-  "ValueTwo" : "300"
+  "key" : "setting2",
+  "action" : "updated",
+  "val1" : 200,
+  "val2" : 300
 }, {
-  "Key" : "setting3",
-  "Action" : "updated",
-  "ValueOne" : "true",
-  "ValueTwo" : "none"
+  "key" : "setting3",
+  "action" : "updated",
+  "val1" : true,
+  "val2" : "none"
 } ]

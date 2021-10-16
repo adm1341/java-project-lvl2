@@ -1,75 +1,70 @@
 package hexlet.code.formatters;
 
-import hexlet.code.DiffObject;
+import hexlet.code.Diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 
 public class FormatterPlain {
-    public static String formatOut(ArrayList<DiffObject> diffArray) {
+    public static String formatOut(List<Diff> listDiff) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (DiffObject diffObject : diffArray) {
-            String stringVal1 = null;
-            if (diffObject.getVal1().isPresent()) {
-                if (diffObject.getVal1().get() instanceof String) {
-                    stringVal1 = "'" + diffObject.getVal1().get() + "'";
-                } else if (diffObject.getVal1().get() instanceof ArrayList) {
-                    stringVal1 = "[complex value]";
-                } else if (diffObject.getVal1().get() instanceof LinkedHashMap) {
-                    stringVal1 = "[complex value]";
-                } else {
-                    stringVal1 = diffObject.getVal1().get().toString();
-                }
-            }
-            String stringVal2 = null;
-            if (diffObject.getVal2().isPresent()) {
-                if (diffObject.getVal2().get() instanceof String) {
-                    stringVal2 = "'" + diffObject.getVal2().get() + "'";
-                } else if (diffObject.getVal2().get() instanceof ArrayList) {
-                    stringVal2 = "[complex value]";
-                } else if (diffObject.getVal2().get() instanceof LinkedHashMap) {
-                    stringVal2 = "[complex value]";
-                } else {
-                    stringVal2 = diffObject.getVal2().get().toString();
-                }
-            }
+        for (Diff diff : listDiff) {
+            String stringVal1 = valueToString(diff.getVal1());
 
-            switch (diffObject.getAction()) {
+            String stringVal2 = valueToString(diff.getVal2());
+
+            switch (diff.getAction()) {
                 case "removed":
-                    stringBuilder.append("Property '");
-                    stringBuilder.append(diffObject.getKey());
-                    stringBuilder.append("' was removed");
-                    stringBuilder.append("\n");
+                    stringBuilder.append("Property '")
+                            .append(diff.getKey())
+                            .append("' was removed")
+                            .append("\n");
                     break;
                 case "added":
-                    stringBuilder.append("Property '");
-                    stringBuilder.append(diffObject.getKey());
-                    stringBuilder.append("' was added with value: ");
-                    stringBuilder.append(stringVal2);
-                    stringBuilder.append("\n");
+                    stringBuilder.append("Property '")
+                            .append(diff.getKey())
+                            .append("' was added with value: ")
+                            .append(stringVal2)
+                            .append("\n");
+                    break;
+                case "updated":
+                    stringBuilder.append("Property '")
+                            .append(diff.getKey())
+                            .append("' was updated. From ")
+                            .append(stringVal1)
+                            .append(" to ")
+                            .append(stringVal2)
+                            .append("\n");
                     break;
                 case "nothing":
                     break;
-                case "updated":
-                    stringBuilder.append("Property '");
-                    stringBuilder.append(diffObject.getKey());
-                    stringBuilder.append("' was updated. From ");
-                    stringBuilder.append(stringVal1);
-                    stringBuilder.append(" to ");
-                    stringBuilder.append(stringVal2);
-                    stringBuilder.append("\n");
-                    break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + diffObject.getAction());
+                    throw new IllegalStateException("Unexpected value: " + diff.getAction());
             }
         }
         String stringBuilderString = stringBuilder.toString();
 
 
+        return stringBuilderString.substring(0, stringBuilderString.length() - 1);
+    }
 
-        return  stringBuilderString.substring(0, stringBuilderString.length() - 1);
+    private static String valueToString(Object value) {
+        String stringValue;
+        if (value instanceof String) {
+            if (!value.equals("null")) {
+                stringValue = "'" + value + "'";
+            } else {
+                stringValue = value.toString();
+            }
+        } else if (value instanceof Collection || value instanceof Map) {
+            stringValue = "[complex value]";
+        } else {
+            stringValue = value.toString();
+        }
+        return stringValue;
     }
 }
