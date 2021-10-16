@@ -1,28 +1,25 @@
 package hexlet.code;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 public class Differ {
     public static String generate(String filepath1, String filePath2, String format) throws IOException {
-
+        String format1 = getExtensionByStringHandling(filepath1);
+        String format2 = getExtensionByStringHandling(filepath1);
 
         Path pathFile1 = Paths.get(filepath1);
         Path pathFile2 = Paths.get(filePath2);
 
-        String format1 = getExtensionByStringHandling(filepath1);
-        String format2 = getExtensionByStringHandling(filepath1);
+        Map<String, Object> map1 = Parser.parseInMap(format1, readFileToString(pathFile1));
 
-        Map<String, Object> map1 = Parser.parseInMap(format1, new File(pathFile1.toUri()));
-
-        Map<String, Object> map2 = Parser.parseInMap(format2, new File(pathFile2.toUri()));
+        Map<String, Object> map2 = Parser.parseInMap(format2, readFileToString(pathFile2));
 
         Map<String, Object> mapAll = new TreeMap<>();
         mapAll.putAll(map1);
@@ -32,7 +29,7 @@ public class Differ {
         List<Diff> listDiff = new ArrayList<>();
 
         for (Map.Entry<String, Object> entry : mapAll.entrySet()) {
-            String key = (String) entry.getKey();
+            String key = entry.getKey();
 
             Object val1 = (map1.get(key) == null) ? "null" : map1.get(key);
             Object val2 = (map2.get(key) == null) ? "null" : map2.get(key);
@@ -57,9 +54,17 @@ public class Differ {
         return generate(filepath1, filePath2, "stylish");
     }
 
-    static String getExtensionByStringHandling(String filename) {
-        return Optional.ofNullable(filename)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(filename.lastIndexOf(".") + 1)).get();
+    static String readFileToString(Path pathFile) throws IOException {
+        return new String(Files.readAllBytes(pathFile));
+    }
+
+    static String getExtensionByStringHandling(String filepath) {
+        String extension = "";
+
+        int i = filepath.lastIndexOf('.');
+        if (i > 0) {
+            extension = filepath.substring(i + 1);
+        }
+        return extension;
     }
 }
