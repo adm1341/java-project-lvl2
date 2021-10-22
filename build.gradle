@@ -32,6 +32,7 @@ application {
     mainClass = 'hexlet.code.App'
 }
 compileJava {
+    compileJava.options.encoding = "UTF-8"
     options.release = 16
 }
 
@@ -39,6 +40,7 @@ repositories {
     mavenCentral()
 }
 test {
+    compileTestJava.options.encoding = "UTF-8"
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }

@@ -11,8 +11,8 @@ import java.util.TreeMap;
 
 public class Differ {
     public static String generate(String filepath1, String filePath2, String format) throws IOException {
-        String format1 = getExtensionByStringHandling(filepath1);
-        String format2 = getExtensionByStringHandling(filepath1);
+        String format1 = getExtension(filepath1);
+        String format2 = getExtension(filepath1);
 
         Path pathFile1 = Paths.get(filepath1);
         Path pathFile2 = Paths.get(filePath2);
@@ -45,7 +45,6 @@ public class Differ {
                 listDiff.add(new Diff(key, "added", val1, val2));
             } else if (val2.equals(val1)) {
                 listDiff.add(new Diff(key, "nothing", val1, val2));
-
             } else if (!val2.equals(val1)) {
                 listDiff.add(new Diff(key, "updated", val1, val2));
             }
@@ -59,10 +58,10 @@ public class Differ {
     }
 
     static String readFileToString(Path pathFile) throws IOException {
-        return new String(Files.readAllBytes(pathFile));
+        return Files.readString(pathFile);
     }
 
-    static String getExtensionByStringHandling(String filepath) {
+    static String getExtension(String filepath) {
         String extension = "";
 
         int i = filepath.lastIndexOf('.');

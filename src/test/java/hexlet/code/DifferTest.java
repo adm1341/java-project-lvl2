@@ -2,7 +2,6 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,7 +20,7 @@ public class DifferTest {
                 + "  + timeout: 20\n"
                 + "  + verbose: true\n"
                 + "}";
-        String actual = Differ.generate("src/test/resources/file1.json", "src/test/resources/file2.json", "stylish");
+        String actual = Differ.generate(getFullPath("file1.json"), getFullPath("file2.json"), "stylish");
         assertEquals(expected, actual);
     }
 
@@ -33,7 +32,7 @@ public class DifferTest {
                 + "    proxy: 123.234.53.22\n"
                 + "    timeout: 50\n"
                 + "}";
-        String actual = Differ.generate("src/test/resources/file1.json", "src/test/resources/file1.json", "stylish");
+        String actual = Differ.generate(getFullPath("file1.json"), getFullPath("file1.json"), "stylish");
         assertEquals(expected, actual);
     }
 
@@ -48,7 +47,7 @@ public class DifferTest {
                 + "  + verbose: true\n"
                 + "}";
         String actual;
-        actual = Differ.generate("src/test/resources/fileYML1.yml", "src/test/resources/fileYML2.yml", "stylish");
+        actual = Differ.generate(getFullPath("fileYML1.yml"), getFullPath("fileYML2.yml"), "stylish");
         assertEquals(expected, actual);
     }
 
@@ -61,71 +60,31 @@ public class DifferTest {
                 + "    timeout: 50\n"
                 + "}";
         String actual;
-        actual = Differ.generate("src/test/resources/fileYML1.yml", "src/test/resources/fileYML1.yml", "stylish");
+        actual = Differ.generate(getFullPath("fileYML1.yml"), getFullPath("fileYML1.yml"), "stylish");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testDifferBigFile1andFile2() throws IOException {
-        String expected = "{\n"
-                + "    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n"
-                + "}";
+        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
         String actual;
-        actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "stylish");
+        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "stylish");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testDifferYMLBigFile1andFile2() throws IOException {
-        String expected = "{\n"
-                + "    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n"
-                + "}";
+        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
         String actual;
-        actual = Differ.generate("src/test/resources/file1BigYML.yml", "src/test/resources/file2BigYML.yml", "stylish");
+        actual = Differ.generate(getFullPath("file1BigYML.yml"), getFullPath("file2BigYML.yml"), "stylish");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDifferYMLBigFile1andFile2NoFormat() throws IOException {
+        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
+        String actual;
+        actual = Differ.generate(getFullPath("file1BigYML.yml"), getFullPath("file2BigYML.yml"));
         assertEquals(expected, actual);
     }
 
@@ -145,27 +104,20 @@ public class DifferTest {
                 + "Property 'setting2' was updated. From 200 to 300\n"
                 + "Property 'setting3' was updated. From true to 'none'";
         String actual;
-        actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "plain");
+        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "plain");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testDifferJSONBigFile1andFile2() throws IOException {
 
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("src/test/resources/JsonExpect.json"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append(System.lineSeparator());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String fileString = sb.toString();
-
-        String expected = fileString.substring(0, fileString.length() - 1);
+        String expected = Files.readString(Paths.get(getFullPath("JsonExpect.json")));
         String actual;
-        actual = Differ.generate("src/test/resources/file1Big.json", "src/test/resources/file2Big.json", "json");
+        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "json");
         assertEquals(expected, actual);
+    }
+
+    public static String getFullPath(String fileName) {
+        return "src/test/resources/" + fileName;
     }
 }
